@@ -28,4 +28,4 @@ function MovieCard({
   );
 }
 
-export default memo(MovieCard);
+export default memo(MovieCard)
