@@ -8,6 +8,11 @@ function MovieCard({
 }) {
   return (
     <div>
+      <img
+        src={movie.image}
+        alt={movie.title}
+      />
+
       <h3>{movie.title}</h3>
 
       <p>{movie.genre}</p>

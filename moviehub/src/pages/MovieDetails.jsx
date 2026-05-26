@@ -18,6 +18,11 @@ function MovieDetails() {
 
   return (
     <div>
+      <img
+        src={movie.image}
+        alt={movie.title}
+      />
+
       <h1>{movie.title}</h1>
 
       <p>{movie.genre}</p>

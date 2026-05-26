@@ -1,13 +1,957 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+
+/* ═══════════════════════════════════════════
+   LIGHT MODE: White + Red
+   ═══════════════════════════════════════════ */
+:root {
+  --primary: #dc2626;
+  --primary-hover: #b91c1c;
+  --primary-light: rgba(220, 38, 38, 0.08);
+  --primary-glow: rgba(220, 38, 38, 0.25);
+  --secondary: #ef4444;
+  --accent: #f87171;
+  --bg-glow-1: rgba(220, 38, 38, 0.05);
+  --bg-glow-2: rgba(239, 68, 68, 0.04);
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-border: rgba(220, 38, 38, 0.1);
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  --text-primary: #1a1a1a;
+  --text-secondary: #525252;
+  --text-muted: #a3a3a3;
+  --nav-bg: rgba(255, 255, 255, 0.85);
+  --nav-border: rgba(220, 38, 38, 0.08);
+  --input-bg: rgba(255, 255, 255, 0.95);
+  --input-border: #e5e5e5;
+  --disabled-bg: #f5f5f5;
+  --disabled-text: #a3a3a3;
+  --bg-body: #fafafa;
+  --badge-bg: rgba(220, 38, 38, 0.07);
+  --badge-border: rgba(220, 38, 38, 0.15);
+  --remove-bg: rgba(220, 38, 38, 0.06);
+  --remove-border: rgba(220, 38, 38, 0.12);
+  --star-color: #dc2626;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* ═══════════════════════════════════════════
+   DARK MODE: Black + Red
+   ═══════════════════════════════════════════ */
+#root > div[style*="#121212"],
+#root > div[style*="rgb(18, 18, 18)"] {
+  --primary: #ef4444;
+  --primary-hover: #f87171;
+  --primary-light: rgba(239, 68, 68, 0.1);
+  --primary-glow: rgba(239, 68, 68, 0.35);
+  --secondary: #dc2626;
+  --accent: #fca5a5;
+  --bg-glow-1: rgba(239, 68, 68, 0.08);
+  --bg-glow-2: rgba(220, 38, 38, 0.06);
+  --card-bg: rgba(18, 18, 18, 0.75);
+  --card-border: rgba(239, 68, 68, 0.1);
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --text-primary: #f5f5f5;
+  --text-secondary: #d4d4d4;
+  --text-muted: #737373;
+  --nav-bg: rgba(10, 10, 10, 0.85);
+  --nav-border: rgba(239, 68, 68, 0.12);
+  --input-bg: rgba(25, 25, 25, 0.8);
+  --input-border: rgba(255, 255, 255, 0.08);
+  --disabled-bg: rgba(255, 255, 255, 0.04);
+  --disabled-text: rgba(255, 255, 255, 0.2);
+  --bg-body: #0a0a0a;
+  --badge-bg: rgba(239, 68, 68, 0.12);
+  --badge-border: rgba(239, 68, 68, 0.2);
+  --remove-bg: rgba(239, 68, 68, 0.08);
+  --remove-border: rgba(239, 68, 68, 0.15);
+  --star-color: #f87171;
+}
+
+/* ═══════════════════════════════════════════
+   GLOBAL RESET
+   ═══════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-body);
+  overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* ═══════════════════════════════════════════
+   AMBIENT BACKGROUND GLOWS
+   ═══════════════════════════════════════════ */
+body::before {
+  content: '';
+  position: fixed;
+  top: -20%;
+  left: -15%;
+  width: 55%;
+  height: 55%;
+  background: radial-gradient(circle, var(--bg-glow-1) 0%, transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+  filter: blur(90px);
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -20%;
+  right: -15%;
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(circle, var(--bg-glow-2) 0%, transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+  filter: blur(110px);
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+#root > div {
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* ═══════════════════════════════════════════
+   PAGE CONTAINER (all pages share this)
+   ═══════════════════════════════════════════ */
+#root > div > div {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 7rem 2rem 4rem 2rem;
+  min-height: calc(100vh - 6rem);
+  animation: pageIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════════ */
+h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.75rem;
+  font-weight: 800;
+  margin: 0 0 1.25rem 0;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+h2 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+h3 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+p {
+  color: var(--text-secondary);
+}
+
+/* ═══════════════════════════════════════════
+   FLOATING GLASSMORPHIC NAVBAR
+   ═══════════════════════════════════════════ */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--nav-border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 1000;
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+}
+
+nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.45rem 1.15rem;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+nav a:hover {
+  color: var(--primary);
+  background: var(--primary-light);
+}
+
+nav a.active {
+  color: #fff;
+  background: var(--primary);
+  font-weight: 600;
+  box-shadow: 0 4px 14px var(--primary-glow);
+}
+
+/* Dark mode active nav link text */
+#root > div[style*="#121212"] nav a.active,
+#root > div[style*="rgb(18, 18, 18)"] nav a.active {
+  color: #fff;
+}
+
+/* Theme Toggle Button in Navbar */
+nav button {
+  background: transparent;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  padding: 0.4rem 1.1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  font-family: inherit;
+  transition: all 0.25s ease;
+  margin-left: 0.75rem;
+}
+
+nav button:hover {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 4px 14px var(--primary-glow);
+  transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════
+   HOME PAGE  (has link to /movies, no multi <p>)
+   ═══════════════════════════════════════════ */
+#root > div > div:has(> a[href="/movies"]):not(:has(p:nth-of-type(2))) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 700px;
+  min-height: calc(100vh - 10rem);
+  gap: 1.5rem;
+}
+
+#root > div > div:has(> a[href="/movies"]):not(:has(p:nth-of-type(2))) h1 {
+  font-size: 4rem;
+  font-weight: 900;
+  margin: 0;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 50%, var(--primary) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 5s linear infinite;
+  letter-spacing: -0.04em;
+}
+
+@keyframes shimmer {
+  to { background-position: 200% center; }
+}
+
+#root > div > div:has(> a[href="/movies"]):not(:has(p:nth-of-type(2))) p {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  max-width: 480px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+#root > div > div:has(> a[href="/movies"]):not(:has(p:nth-of-type(2))) a {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff !important;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.05rem;
+  padding: 0.9rem 2.25rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px var(--primary-glow);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+}
+
+#root > div > div:has(> a[href="/movies"]):not(:has(p:nth-of-type(2))) a:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 30px var(--primary-glow);
+  background: var(--primary-hover);
+}
+
+/* ═══════════════════════════════════════════
+   FORM CONTROLS (input, select)
+   ═══════════════════════════════════════════ */
+input[type="text"] {
+  width: 100%;
+  padding: 0.7rem 1.15rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  outline: none;
+}
+
+input[type="text"]::placeholder {
+  color: var(--text-muted);
+}
+
+input[type="text"]:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+select {
+  width: 100%;
+  padding: 0.7rem 2.5rem 0.7rem 1.15rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--text-primary);
+  background-color: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23dc2626'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center;
+  background-size: 1rem;
+}
+
+#root > div[style*="#121212"] select,
+#root > div[style*="rgb(18, 18, 18)"] select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ef4444'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+}
+
+select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+/* ═══════════════════════════════════════════
+   MOVIES CATALOG PAGE (has search input)
+   ═══════════════════════════════════════════ */
+#root > div > div:has(input[placeholder*="Search"]) {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+/* Page title */
+#root > div > div:has(input[placeholder*="Search"]) > h1 {
+  grid-column: span 12;
+  margin-bottom: 0.25rem;
+}
+
+/* Search input */
+#root > div > div:has(input[placeholder*="Search"]) > input[type="text"] {
+  grid-column: span 6;
+  height: 46px;
+}
+
+/* Focus Search button */
+#root > div > div:has(input[placeholder*="Search"]) > button:first-of-type {
+  grid-column: span 3;
+  height: 46px;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1.5px solid var(--input-border);
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+#root > div > div:has(input[placeholder*="Search"]) > button:first-of-type:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-light);
+}
+
+/* Genre select */
+#root > div > div:has(input[placeholder*="Search"]) > select {
+  grid-column: span 3;
+  height: 46px;
+}
+
+/* Results count text */
+#root > div > div:has(input[placeholder*="Search"]) > p:first-of-type {
+  grid-column: span 12;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin: 0.25rem 0 0.75rem 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--card-border);
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════
+   MOVIE CARDS (children divs inside catalog)
+   ═══════════════════════════════════════════ */
+#root > div > div:has(input[placeholder*="Search"]) > div {
+  grid-column: span 4;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 0;
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  min-height: 240px;
+}
+
+/* Movie card poster image */
+#root > div > div:has(input[placeholder*="Search"]) > div img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  border-radius: 14px 14px 0 0;
+  transition: transform 0.4s ease;
+}
+
+#root > div > div:has(input[placeholder*="Search"]) > div:hover img {
+  transform: scale(1.03);
+}
+
+/* Card body content wrapper — everything after img */
+#root > div > div:has(input[placeholder*="Search"]) > div h3,
+#root > div > div:has(input[placeholder*="Search"]) > div p,
+#root > div > div:has(input[placeholder*="Search"]) > div a,
+#root > div > div:has(input[placeholder*="Search"]) > div button {
+  margin-left: 1.2rem;
+  margin-right: 1.2rem;
+}
+
+/* Red accent line on top */
+#root > div > div:has(input[placeholder*="Search"]) > div::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#root > div > div:has(input[placeholder*="Search"]) > div:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 40px rgba(220, 38, 38, 0.1);
+  border-color: rgba(220, 38, 38, 0.2);
+}
+
+#root > div > div:has(input[placeholder*="Search"]) > div:hover::before {
+  opacity: 1;
+}
+
+/* Movie title */
+#root > div > div:has(input[placeholder*="Search"]) > div h3 {
+  margin: 0.9rem 1.2rem 0 1.2rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Genre badge */
+#root > div > div:has(input[placeholder*="Search"]) > div p:first-of-type {
+  margin: 0;
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  background: var(--badge-bg);
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 0.72rem;
+  border-radius: 6px;
+  align-self: flex-start;
+  border: 1px solid var(--badge-border);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Rating */
+#root > div > div:has(input[placeholder*="Search"]) > div p:nth-of-type(2) {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--star-color);
+  font-weight: 600;
+}
+
+/* View Details link */
+#root > div > div:has(input[placeholder*="Search"]) > div a {
+  margin-top: auto;
+  margin-bottom: 0;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: center;
+  padding: 0.55rem;
+  border-radius: 8px;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  transition: all 0.25s ease;
+}
+
+#root > div > div:has(input[placeholder*="Search"]) > div a:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+/* Save / Saved button */
+#root > div > div:has(input[placeholder*="Search"]) > div button {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 0.6rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 10px var(--primary-glow);
+  margin-bottom: 1.2rem;
+}
+
+#root > div > div:has(input[placeholder*="Search"]) > div button:hover:not(:disabled) {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 16px var(--primary-glow);
+}
+
+#root > div > div:has(input[placeholder*="Search"]) > div button:disabled {
+  background: var(--disabled-bg);
+  color: var(--disabled-text);
+  box-shadow: none;
+  cursor: not-allowed;
+  border: 1px solid var(--input-border);
+}
+
+/* ═══════════════════════════════════════════
+   SAVED MOVIES PAGE (has <h2> for avg rating)
+   ═══════════════════════════════════════════ */
+#root > div > div:has(h2) {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+#root > div > div:has(h2) > h1 {
+  grid-column: span 12;
+  margin-bottom: 0.25rem;
+}
+
+#root > div > div:has(h2) > h2 {
+  grid-column: span 12;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin: 0 0 1rem 0;
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 0.7rem;
+}
+
+/* Empty state */
+#root > div > h2:only-child {
+  max-width: 500px;
+  margin: 10rem auto 0 auto;
+  text-align: center;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+  box-shadow: var(--card-shadow);
+  color: var(--text-muted);
+  font-size: 1.15rem;
+}
+
+/* Saved movie cards */
+#root > div > div:has(h2) > div {
+  grid-column: span 4;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 1.35rem;
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  min-height: 130px;
+}
+
+#root > div > div:has(h2) > div:hover {
+  transform: translateY(-4px);
+  border-color: rgba(220, 38, 38, 0.2);
+  box-shadow: 0 10px 28px rgba(220, 38, 38, 0.08);
+}
+
+#root > div > div:has(h2) > div h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/* Remove button */
+#root > div > div:has(h2) > div button {
+  background: var(--remove-bg);
+  color: var(--primary);
+  border: 1px solid var(--remove-border);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.82rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  width: 100%;
+  text-align: center;
+}
+
+#root > div > div:has(h2) > div button:hover {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 4px 12px var(--primary-glow);
+}
+
+/* ═══════════════════════════════════════════
+   MOVIE DETAILS PAGE
+   ═══════════════════════════════════════════ */
+#root > div > div:has(> a[href="/movies"]):has(> p:nth-of-type(4)) {
+  max-width: 680px;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 0;
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 1rem;
+  margin-top: 9rem;
+  margin-bottom: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Movie Details poster image */
+#root > div > div:has(> a[href="/movies"]):has(> p:nth-of-type(4)) img {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  display: block;
+  border-radius: 20px 20px 0 0;
+}
+
+/* Details content padding */
+#root > div > div:has(> a[href="/movies"]):has(> p:nth-of-type(4)) h1,
+#root > div > div:has(> a[href="/movies"]):has(> p:nth-of-type(4)) p,
+#root > div > div:has(> a[href="/movies"]):has(> p:nth-of-type(4)) a {
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+}
+
+#root > div > div:has(> a[href="/movies"]):has(> p:nth-of-type(4)) a {
+  margin-bottom: 2.5rem;
+}
+
+/* Red accent bar at top of details card */
+#root > div > div:has(> a[href="/movies"]):has(> p:nth-of-type(4))::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+}
+
+#root > div > div:has(> a[href="/movies"]):has(> p:nth-of-type(4)) h1 {
+  font-size: 3rem;
+  margin: 0;
+  line-height: 1.1;
+}
+
+/* Genre badge */
+#root > div > div:has(> a[href="/movies"]):has(> p:nth-of-type(4)) p:first-of-type {
+  margin: 0;
+  padding: 0.25rem 0.75rem;
+  background: var(--badge-bg);
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  border: 1px solid var(--badge-border);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Description */
+#root > div > div:has(> a[href="/movies"]):has(> p:nth-of-type(4)) p:nth-of-type(2) {
+  font-size: 1.1rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin: 0.3rem 0;
+}
+
+/* Rating */
+#root > div > div:has(> a[href="/movies"]):has(> p:nth-of-type(4)) p:nth-of-type(3) {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--star-color);
+  margin: 0;
+}
+
+/* Duration */
+#root > div > div:has(> a[href="/movies"]):has(> p:nth-of-type(4)) p:nth-of-type(4) {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Back link */
+#root > div > div:has(> a[href="/movies"]):has(> p:nth-of-type(4)) a {
+  margin-top: 1.25rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.65rem 1.4rem;
+  border-radius: 10px;
+  border: 1.5px solid var(--input-border);
+  background: var(--input-bg);
+  transition: all 0.25s ease;
+  font-size: 0.9rem;
+}
+
+#root > div > div:has(> a[href="/movies"]):has(> p:nth-of-type(4)) a:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+  transform: translateX(-3px);
+  background: var(--primary-light);
+}
+
+/* ═══════════════════════════════════════════
+   ABOUT PAGE (has h1, no links, no h2)
+   ═══════════════════════════════════════════ */
+#root > div > div:has(> h1):not(:has(a)):not(:has(h2)) {
+  max-width: 580px;
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+  margin-top: 10rem;
+}
+
+#root > div > div:has(> h1):not(:has(a)):not(:has(h2)) h1 {
+  font-size: 2.75rem;
+  margin: 0;
+}
+
+#root > div > div:has(> h1):not(:has(a)):not(:has(h2)) p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════
+   404 NOT FOUND PAGE (has link to /)
+   ═══════════════════════════════════════════ */
+#root > div > div:has(> a[href="/"]) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1.25rem;
+  min-height: calc(100vh - 10rem);
+}
+
+#root > div > div:has(> a[href="/"]) h1 {
+  font-size: 5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--primary) 0%, #000 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+/* Dark mode 404 */
+#root > div[style*="#121212"] > div:has(> a[href="/"]) h1,
+#root > div[style*="rgb(18, 18, 18)"] > div:has(> a[href="/"]) h1 {
+  background: linear-gradient(135deg, var(--primary) 0%, #fff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#root > div > div:has(> a[href="/"]) a {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.75rem 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px var(--primary-glow);
+  transition: all 0.25s ease;
+}
+
+#root > div > div:has(> a[href="/"]) a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--primary-glow);
+  background: var(--primary-hover);
+}
+
+/* ═══════════════════════════════════════════
+   CUSTOM SCROLLBAR
+   ═══════════════════════════════════════════ */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(220, 38, 38, 0.18);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(220, 38, 38, 0.35);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ═══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  #root > div > div:has(input[placeholder*="Search"]) > div,
+  #root > div > div:has(h2) > div {
+    grid-column: span 6;
+  }
+}
+
+@media (max-width: 768px) {
+  #root > div > div {
+    padding: 6rem 1.25rem 3rem 1.25rem;
+  }
+
+  nav {
+    gap: 0.35rem;
+    padding: 0 0.5rem;
+  }
+
+  nav a {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.8rem;
+  }
+
+  nav button {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.78rem;
+    margin-left: 0.25rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  #root > div > div:has(> a[href="/movies"]):not(:has(p:nth-of-type(2))) h1 {
+    font-size: 2.75rem;
+  }
+
+  #root > div > div:has(input[placeholder*="Search"]) {
+    gap: 0.75rem;
+  }
+
+  #root > div > div:has(input[placeholder*="Search"]) > input[type="text"] {
+    grid-column: span 12;
+  }
+
+  #root > div > div:has(input[placeholder*="Search"]) > button:first-of-type {
+    grid-column: span 6;
+  }
+
+  #root > div > div:has(input[placeholder*="Search"]) > select {
+    grid-column: span 6;
+  }
+
+  #root > div > div:has(input[placeholder*="Search"]) > div,
+  #root > div > div:has(h2) > div {
+    grid-column: span 12;
+  }
+
+  #root > div > div:has(> a[href="/movies"]):has(> p:nth-of-type(4)) {
+    padding: 1.75rem;
+    margin-top: 7.5rem;
+  }
+
+  #root > div > div:has(> a[href="/movies"]):has(> p:nth-of-type(4)) h1 {
+    font-size: 2.25rem;
+  }
+
+  #root > div > div:has(> h1):not(:has(a)):not(:has(h2)) {
+    padding: 2rem 1.5rem;
+    margin-top: 8rem;
+  }
 }

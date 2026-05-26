@@ -36,9 +36,13 @@ function SavedMovies({
       </h2>
 
       {savedMovies.map((movie) => (
+        
         <div key={movie.id}>
           <h3>{movie.title}</h3>
-
+  <img
+        src={movie.image}
+        alt={movie.title}
+      />
           <button
             onClick={() =>
               removeMovie(movie.id)

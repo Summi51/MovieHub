@@ -70,6 +70,8 @@ function Movies({
         <option>Sci-Fi</option>
         <option>Action</option>
         <option>Drama</option>
+        <option>Romance</option>
+        <option>Comedy</option>
       </select>
 
       <p>
